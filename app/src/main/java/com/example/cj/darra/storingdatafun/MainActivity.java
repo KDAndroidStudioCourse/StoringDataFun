@@ -1,43 +1,44 @@
 package com.example.cj.darra.storingdatafun;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-
-import java.io.IOException;
-import java.util.ArrayList;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()) {
+            case R.id.settings:
+                Log.i("Item Selected", "" + item.getTitle());
+                return true;
+
+            case R.id.help:
+                Log.i("Item Selected", "" + item.getTitle());
+                return true;
+
+            default:
+                return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPreferences = this.getSharedPreferences("com.example.cj.darra.storingdatafun", Context.MODE_PRIVATE);
 
-        ArrayList<String> friends = new ArrayList<>();
-
-        friends.add("A");
-        friends.add("B");
-        friends.add("C");
-        friends.add("D");
-        friends.add("E");
-
-        try {
-            sharedPreferences.edit().putString("username", ObjectSerializer.serialize(friends)).apply();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String username = sharedPreferences.getString("username", "");
-
-        try {
-            Log.i("This is the username", "" + ObjectSerializer.deserialize(username));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
